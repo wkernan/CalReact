@@ -1,14 +1,7 @@
 class AppointmentForm extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
 	handleChange(e) {
-		let name = e.target.name;
-		let obj = {};
+		const name = e.target.name;
+		const obj = {};
 		obj[name] = e.target.value;
 		this.props.onUserInput(obj);
 	}
@@ -22,9 +15,9 @@ class AppointmentForm extends React.Component {
 		return(
 			<div>
 				<h2>Make a New Appointment</h2>
-				<form onSubmit={this.handleSubmit}>
-					<input name="title" placeholder="Appointment Title" value={this.props.title} onChange={this.handleChange} />
-					<input name="appt_time" placeholder="Date and Time" value={this.props.appt_time} onChange={this.handleChange} />
+				<form onSubmit={this.handleSubmit.bind(this)}>
+					<input name="title" placeholder="Appointment Title" value={this.props.title} onChange={this.handleChange.bind(this)} />
+					<input name="appt_time" placeholder="Date and Time" value={this.props.appt_time} onChange={this.handleChange.bind(this)} />
 					<input type="submit" value="Make Appointment" /> 
 				</form>
 			</div>

@@ -7,9 +7,6 @@ class Appointments extends React.Component {
 			title: '',
 			appt_time: ''
 		}
-
-		this.handleUserInput = this.handleUserInput.bind(this);
-		this.handleFormSubmit = this.handleFormSubmit.bind(this);
 	}
 
 	handleUserInput(obj) {
@@ -17,22 +14,23 @@ class Appointments extends React.Component {
 	}
 
 	handleFormSubmit() {
-		let appointment = {title: this.state.title, appt_time: this.state.appt_time};
-		$.post('/appointments', {appointment: appointment})
-			.done((data) => {
-				this.addNewAppointment(data);
-			})
+    const appointment = {title: this.state.title, appt_time: this.state.appt_time};
+    $.post('/appointments',
+            {appointment: appointment})
+          .done(function(data) {
+            this.addNewAppointment(data);
+          }.bind(this));
 	}
 
 	addNewAppointment(appointment) {
-		let appointments = React.addons.update(this.state.appointments, { $push: [appointment]});
+		const appointments = React.addons.update(this.state.appointments, { $push: [appointment]});
 		this.setState({appointments: appointments});
 	}
 
 	render() {
 		return(
 			<div>
-				<AppointmentForm input_title={this.state.title} input_appt_time={this.state.appt_time} onUserInput={this.handleUserInput} onFormSubmit={this.handleFormSubmit} />
+				<AppointmentForm input_title={this.state.title} input_appt_time={this.state.appt_time} onUserInput={this.handleUserInput.bind(this)} onFormSubmit={this.handleFormSubmit.bind(this)} />
 				<AppointmentsList appointments={this.props.appointments} />
 			</div>
 		)
